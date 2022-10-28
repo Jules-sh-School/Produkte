@@ -7,6 +7,10 @@ public final class Benutzerschnittstelle {
     public Benutzerschnittstelle() {
     }
 
+    public static void main(String[] args) {
+
+    }
+
     private void geklicktAendern() {
 
     }

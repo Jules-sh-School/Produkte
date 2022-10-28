@@ -1,13 +1,15 @@
 package datenspeicherung;
 
 public final class ProduktDaten {
-    private String bezeichnung;
-    private double lagerbestand;
-    private int produktNr;
-    private double verkaufspreis;
+
+    private final int produktNr;
+    private final String bezeichnung;
+
+    private final double verkaufspreis;
+    private final double lagerbestand;
 
 
-    public ProduktDaten(String bezeichnung, double lagerbestand, int produktNr, double verkaufspreis) {
+    public ProduktDaten(int produktNr, String bezeichnung, double verkaufspreis, double lagerbestand) {
         this.bezeichnung = bezeichnung;
         this.lagerbestand = lagerbestand;
         this.produktNr = produktNr;
