@@ -16,7 +16,7 @@ public final class ProduktSpeicher {
     }
 
     public void fuegeHinzu(String bezeichnung, double verkaufspreis, double lagerbestand) throws IOException {
-        final BufferedWriter writer = new BufferedWriter(new FileWriter("produkt.csv"));
+        final BufferedWriter writer = new BufferedWriter(new FileWriter("produkt.csv", true));
         final BufferedReader reader = new BufferedReader(new FileReader("produktnr.csv"));
         final int nr = reader.read();
         final String s = nr + ";" + bezeichnung + ";" + verkaufspreis + ";" + lagerbestand;
@@ -51,6 +51,12 @@ public final class ProduktSpeicher {
     }
 
     public void loesche(int produktNr) {
-
+        final ArrayList<ProduktDaten> list;
+        try {
+            list = liesProdukte();
+        } catch (IOException ignored) {
+            return;
+        }
+        list.removeIf(produktDaten -> produktDaten.liesProduktNr() == produktNr);
     }
 }
