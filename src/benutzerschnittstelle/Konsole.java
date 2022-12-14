@@ -17,11 +17,7 @@ public final class Konsole {
         } catch (IOException ignored) {
         }
         final ArrayList<ProduktDaten> d;
-        try {
-            d = sp.liesProdukte();
-        } catch (IOException ignored) {
-            return;
-        }
+        d = sp.liesProdukte();
         System.out.format("%10s %-50s %13s %13s", "Produktnr", "Bezeichnung", "Verkaufspreis", "Lagerbestand");
         System.out.print(System.lineSeparator());
         System.out.println("-------------------------------------------------------------------------------------");

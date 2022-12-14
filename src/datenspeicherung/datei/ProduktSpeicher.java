@@ -10,9 +10,12 @@ public final class ProduktSpeicher {
     public ProduktSpeicher() {
     }
 
-    public void aendere(int produktNr, String bezeichnung, double verkaufspreis, double lagerbestand) throws IOException {
+    public void aendere(int produktNr, String bezeichnung, double verkaufspreis, double lagerbestand) {
         loesche(produktNr);
-        fuegeHinzu(bezeichnung, verkaufspreis, lagerbestand);
+        try {
+            fuegeHinzu(bezeichnung, verkaufspreis, lagerbestand);
+        } catch (IOException ignored) {
+        }
     }
 
     public void fuegeHinzu(String bezeichnung, double verkaufspreis, double lagerbestand) throws IOException {
@@ -25,9 +28,14 @@ public final class ProduktSpeicher {
         writer.close();
     }
 
-    public ArrayList<ProduktDaten> liesProdukte() throws IOException {
+    public ArrayList<ProduktDaten> liesProdukte() {
         final ArrayList<ProduktDaten> list = new ArrayList<>();
-        final BufferedReader reader = new BufferedReader(new FileReader("produkt.csv"));
+        final BufferedReader reader;
+        try {
+            reader = new BufferedReader(new FileReader("produkt.csv"));
+        } catch (IOException e) {
+            return list;
+        }
         while (true) {
             final String zeile;
             try {
@@ -46,17 +54,17 @@ public final class ProduktSpeicher {
             final ProduktDaten produkt = new ProduktDaten(produktNr, bezeichnung, verkaufspreis, lagerbestand);
             list.add(produkt);
         }
-        reader.close();
+        try {
+            reader.close();
+        } catch (IOException ignored) {
+            return list;
+        }
         return list;
     }
 
     public void loesche(int produktNr) {
         final ArrayList<ProduktDaten> list;
-        try {
-            list = liesProdukte();
-        } catch (IOException ignored) {
-            return;
-        }
+        list = liesProdukte();
         list.removeIf(produktDaten -> produktDaten.liesProduktNr() == produktNr);
     }
 }
